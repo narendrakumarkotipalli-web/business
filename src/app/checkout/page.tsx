@@ -3,37 +3,43 @@ import CheckoutForm from '@/components/CheckoutForm';
 import OrderSummary from '@/components/OrderSummary';
 
 export const metadata: Metadata = {
-  title: 'Checkout — PickleMart',
-  description: 'Complete your pickle order. Place your order via WhatsApp.',
+  title: 'Complete Your Order — PickleMart',
+  description: 'Complete your homemade Andhra pickle order quickly and easily via WhatsApp.',
 };
 
 export default function CheckoutPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Checkout</h1>
-        <p className="text-gray-500 text-sm mt-1">
-          Fill in your details and place your order via WhatsApp.
+        <h1 className="text-3xl sm:text-4xl font-serif font-bold text-espresso">
+          Checkout & Confirmation
+        </h1>
+        <p className="text-warmTaupe text-sm mt-1.5 font-medium">
+          Fill in your delivery address to generate your instant WhatsApp order request.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <div>
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-            <h2 className="font-bold text-gray-900 mb-6 text-base">Contact Details</h2>
+          <div className="bg-pureWhite rounded-3xl border border-warmTaupe/15 shadow-md p-6 sm:p-8">
+            <h2 className="font-serif font-bold text-espresso mb-6 text-lg border-b border-warmTaupe/15 pb-2">
+              Delivery Details
+            </h2>
             <CheckoutForm />
           </div>
         </div>
 
-        <div className="lg:sticky lg:top-20 lg:self-start">
+        <div className="lg:sticky lg:top-28 space-y-4">
           <OrderSummary />
-          <div className="mt-4 bg-green-50 border border-green-100 rounded-2xl p-4">
-            <p className="text-xs text-green-700 font-medium mb-1">📲 How it works</p>
-            <ol className="text-xs text-green-600 space-y-1 list-decimal list-inside">
-              <li>Fill your contact details</li>
-              <li>Click &quot;Place Order via WhatsApp&quot;</li>
-              <li>WhatsApp opens with your order pre-filled</li>
-              <li>Send the message — we confirm within minutes!</li>
+          <div className="bg-softCream border border-oliveGreen/20 rounded-2xl p-5 shadow-xs">
+            <p className="text-xs text-oliveGreen font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <span>📲</span> Instant WhatsApp Confirmation
+            </p>
+            <ol className="text-xs text-espresso/80 space-y-2 list-decimal list-inside leading-relaxed font-medium">
+              <li>Submit your delivery address and optional notes</li>
+              <li>Click &quot;Place Order via WhatsApp&quot; button</li>
+              <li>WhatsApp opens immediately with your pre-formatted order</li>
+              <li>Send the text message — we acknowledge and dispatch swiftly!</li>
             </ol>
           </div>
         </div>
@@ -41,3 +47,4 @@ export default function CheckoutPage() {
     </div>
   );
 }
+

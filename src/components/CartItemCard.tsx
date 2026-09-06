@@ -21,20 +21,22 @@ export default function CartItemCard({ item }: CartItemCardProps) {
   };
 
   return (
-    <div className="flex items-start gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
+    <div className="flex items-start gap-4 p-5 bg-pureWhite rounded-2xl border border-warmTaupe/15 shadow-[0_2px_12px_-3px_rgba(47,41,35,0.06)]">
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-gray-900 text-sm truncate">{item.name}</h3>
-        <p className="text-xs text-gray-500 mt-0.5">Pack: {item.size}</p>
-        <p className="text-sm font-medium text-orange-500 mt-1">
-          {formatPrice(item.price)} <span className="text-gray-400 text-xs">/ unit</span>
+        <h3 className="font-serif font-bold text-espresso text-base truncate">{item.name}</h3>
+        <p className="text-xs text-warmTaupe mt-0.5 font-medium">Pack size: {item.size}</p>
+        <p className="text-sm font-semibold text-oliveGreen mt-1.5">
+          {formatPrice(item.price)}{' '}
+          <span className="text-warmTaupe font-normal text-xs">/ unit</span>
         </p>
       </div>
 
       <div className="flex flex-col items-end gap-3">
         <button
+          type="button"
           onClick={handleRemove}
           aria-label={`Remove ${item.name} from cart`}
-          className="text-gray-400 hover:text-red-500 transition-colors duration-200"
+          className="text-warmTaupe/60 hover:text-chiliRed transition-colors duration-200 p-1 rounded-lg hover:bg-chiliRed/10"
         >
           <Trash2 size={16} />
         </button>
@@ -42,10 +44,11 @@ export default function CartItemCard({ item }: CartItemCardProps) {
           quantity={item.quantity}
           onChange={(q) => dispatch(updateQuantity({ id: item.id, quantity: q }))}
         />
-        <p className="text-sm font-bold text-gray-900">
+        <p className="text-base font-bold text-espresso font-serif">
           {formatPrice(item.price * item.quantity)}
         </p>
       </div>
     </div>
   );
 }
+

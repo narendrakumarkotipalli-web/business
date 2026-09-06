@@ -5,26 +5,36 @@ export function buildWhatsAppUrl(
   cartItems: CartItem[],
   total: number
 ): string {
-  const itemLines = cartItems.map(
-    (item) =>
-      `• ${item.name} (${item.size}) x${item.quantity} = ₹${(item.price * item.quantity).toLocaleString('en-IN')}`
-  );
+  const formatPrice = (amount: number) => `₹${amount.toLocaleString('en-IN')}`;
+
+  const itemLines = cartItems.flatMap((item, index) => [
+    `${index + 1}. *${item.name}*`,
+    `   • Pack Size: ${item.size}`,
+    `   • Quantity: ${item.quantity}`,
+    `   • Unit Price: ${formatPrice(item.price)}`,
+    `   • Item Total: *${formatPrice(item.price * item.quantity)}*`,
+    ``,
+  ]);
 
   const lines = [
-    `🛒 *New Pickle Order*`,
+    `🌶️ *PICKLEMART ORDER*`,
+    `━━━━━━━━━━━━━━━━━━━━`,
     ``,
-    `*Customer Details*`,
-    `👤 Name: ${customer.name}`,
-    `📞 Phone: ${customer.phone}`,
-    `📍 Address: ${customer.address}`,
-    ...(customer.note ? [`📝 Note: ${customer.note}`] : []),
+    `👤 *CUSTOMER DETAILS*`,
+    `Name: ${customer.name}`,
+    `Phone: ${customer.phone}`,
+    `Delivery Address:`,
+    `${customer.address}`,
+    ...(customer.note ? [`Special Instructions:`, `${customer.note}`] : []),
     ``,
-    `*Order Details*`,
+    `🛍️ *ORDER DETAILS*`,
     ...itemLines,
+    `━━━━━━━━━━━━━━━━━━━━`,
+    `💰 *GRAND TOTAL: ${formatPrice(total)}*`,
     ``,
-    `💰 *Total: ₹${total.toLocaleString('en-IN')}*`,
+    `Please confirm my order and share the payment details.`,
     ``,
-    `_Thank you for ordering from our homemade pickle store!_`,
+    `_Thank you for choosing PickleMart!_`,
   ];
 
   const message = lines.join('\n');

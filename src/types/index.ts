@@ -14,7 +14,11 @@ export interface Pickle {
   ingredients: string[];
   prices: PicklePrices;
   image: string;
+  category?: 'non-veg' | 'veg';
+  tag?: string;
+  spiceLevel?: 'Mild' | 'Medium' | 'Fiery Hot';
 }
+
 
 export interface CartItem {
   id: string;

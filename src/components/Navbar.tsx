@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useAppSelector } from '@/store/hooks';
 
@@ -18,14 +19,26 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-orange-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-softCream border-b border-warmTaupe/15 shadow-sm backdrop-blur-md bg-opacity-95">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🥒</span>
+        <div className="flex items-center justify-between h-20">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full bg-oliveGreen/10 flex items-center justify-center border border-oliveGreen/20 group-hover:scale-105 transition-transform duration-200">
+              <Image
+                src="/aruh_pickles/Aruh_icon.webp"
+                alt="Aruh Pickles"
+                width={40}
+                height={40}
+                className="h-full w-full rounded-full object-cover"
+              />
+            </div>
             <div className="leading-tight">
-              <p className="text-lg font-bold text-gray-900 leading-none">PickleMart</p>
-              <p className="text-xs text-orange-500 font-medium">Homemade Non-Veg Pickles</p>
+              <p className="text-xl sm:text-2xl font-serif font-bold text-espresso tracking-tight">
+                Aruh Pickles
+              </p>
+              <p className="text-[11px] uppercase tracking-wider text-mustardGold font-semibold">
+                Authentic Homemade Pickles
+              </p>
             </div>
           </Link>
 
@@ -34,7 +47,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 hover:text-orange-500 font-medium transition-colors duration-200"
+                className="text-warmTaupe hover:text-oliveGreen font-medium text-sm transition-colors duration-200"
               >
                 {link.label}
               </Link>
@@ -45,18 +58,18 @@ export default function Navbar() {
             <Link
               href="/cart"
               aria-label={`Cart with ${cartCount} items`}
-              className="relative p-2 text-gray-700 hover:text-orange-500 transition-colors duration-200"
+              className="relative p-2.5 rounded-xl text-espresso hover:text-oliveGreen hover:bg-oliveGreen/5 transition-all duration-200"
             >
-              <ShoppingCart size={24} />
+              <ShoppingBag size={22} />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                <span className="absolute top-0.5 right-0.5 bg-chiliRed text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm animate-pulse">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
             </Link>
 
             <button
-              className="md:hidden p-2 text-gray-700 hover:text-orange-500 transition-colors"
+              className="md:hidden p-2 rounded-xl text-espresso hover:text-oliveGreen hover:bg-oliveGreen/5 transition-colors"
               onClick={() => setMobileOpen((prev) => !prev)}
               aria-label="Toggle menu"
             >
@@ -67,14 +80,14 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-orange-100 bg-white">
-          <nav className="flex flex-col px-4 py-3 gap-1">
+        <div className="md:hidden border-t border-warmTaupe/15 bg-softCream px-4 py-3 shadow-lg">
+          <nav className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="py-3 px-2 text-gray-700 hover:text-orange-500 font-medium border-b border-gray-50 last:border-0 transition-colors duration-200"
+                className="py-3 px-3 rounded-lg text-espresso hover:text-oliveGreen hover:bg-oliveGreen/5 font-medium border-b border-warmTaupe/10 last:border-0 transition-colors duration-200"
               >
                 {link.label}
               </Link>
@@ -85,3 +98,4 @@ export default function Navbar() {
     </header>
   );
 }
+

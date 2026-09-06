@@ -2,6 +2,7 @@
 const nextConfig = {
   basePath: '/aruh_pickles',
   images: {
+    unoptimized: true,
     formats: ['image/webp', 'image/avif'],
   },
   async redirects() {

@@ -65,8 +65,8 @@ export default function CheckoutForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
       <div>
-        <label htmlFor="checkout-name" className="block text-sm font-medium text-gray-700 mb-1.5">
-          Full Name <span className="text-red-500">*</span>
+        <label htmlFor="checkout-name" className="block text-sm font-semibold text-espresso mb-1.5">
+          Full Name <span className="text-chiliRed">*</span>
         </label>
         <input
           id="checkout-name"
@@ -74,18 +74,18 @@ export default function CheckoutForm() {
           autoComplete="name"
           placeholder="e.g. Narendra Kumar"
           {...register('name')}
-          className={`w-full px-4 py-3 rounded-xl border text-sm text-gray-900 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-orange-400 focus:border-transparent ${
-            errors.name ? 'border-red-400 bg-red-50' : 'border-gray-300 bg-white'
+          className={`w-full px-4 py-3 rounded-xl border text-sm text-espresso placeholder-warmTaupe/50 outline-none transition-all duration-200 focus:ring-2 focus:ring-oliveGreen focus:border-transparent ${
+            errors.name ? 'border-chiliRed bg-chiliRed/5' : 'border-warmTaupe/25 bg-pureWhite'
           }`}
         />
         {errors.name && (
-          <p className="text-red-500 text-xs mt-1.5" role="alert">{errors.name.message}</p>
+          <p className="text-chiliRed text-xs mt-1.5 font-medium" role="alert">{errors.name.message}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="checkout-phone" className="block text-sm font-medium text-gray-700 mb-1.5">
-          WhatsApp / Phone Number <span className="text-red-500">*</span>
+        <label htmlFor="checkout-phone" className="block text-sm font-semibold text-espresso mb-1.5">
+          WhatsApp / Phone Number <span className="text-chiliRed">*</span>
         </label>
         <input
           id="checkout-phone"
@@ -93,52 +93,52 @@ export default function CheckoutForm() {
           autoComplete="tel"
           placeholder="10-digit mobile number"
           {...register('phone')}
-          className={`w-full px-4 py-3 rounded-xl border text-sm text-gray-900 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-orange-400 focus:border-transparent ${
-            errors.phone ? 'border-red-400 bg-red-50' : 'border-gray-300 bg-white'
+          className={`w-full px-4 py-3 rounded-xl border text-sm text-espresso placeholder-warmTaupe/50 outline-none transition-all duration-200 focus:ring-2 focus:ring-oliveGreen focus:border-transparent ${
+            errors.phone ? 'border-chiliRed bg-chiliRed/5' : 'border-warmTaupe/25 bg-pureWhite'
           }`}
         />
         {errors.phone && (
-          <p className="text-red-500 text-xs mt-1.5" role="alert">{errors.phone.message}</p>
+          <p className="text-chiliRed text-xs mt-1.5 font-medium" role="alert">{errors.phone.message}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="checkout-address" className="block text-sm font-medium text-gray-700 mb-1.5">
-          Delivery Address <span className="text-red-500">*</span>
+        <label htmlFor="checkout-address" className="block text-sm font-semibold text-espresso mb-1.5">
+          Delivery Address <span className="text-chiliRed">*</span>
         </label>
         <textarea
           id="checkout-address"
           rows={3}
           autoComplete="street-address"
-          placeholder="House/Flat No, Street, City, State, PIN"
+          placeholder="House/Flat No, Street, City, State, PIN code"
           {...register('address')}
-          className={`w-full px-4 py-3 rounded-xl border text-sm text-gray-900 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-orange-400 focus:border-transparent resize-none ${
-            errors.address ? 'border-red-400 bg-red-50' : 'border-gray-300 bg-white'
+          className={`w-full px-4 py-3 rounded-xl border text-sm text-espresso placeholder-warmTaupe/50 outline-none transition-all duration-200 focus:ring-2 focus:ring-oliveGreen focus:border-transparent resize-none ${
+            errors.address ? 'border-chiliRed bg-chiliRed/5' : 'border-warmTaupe/25 bg-pureWhite'
           }`}
         />
         {errors.address && (
-          <p className="text-red-500 text-xs mt-1.5" role="alert">{errors.address.message}</p>
+          <p className="text-chiliRed text-xs mt-1.5 font-medium" role="alert">{errors.address.message}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="checkout-note" className="block text-sm font-medium text-gray-700 mb-1.5">
+        <label htmlFor="checkout-note" className="block text-sm font-semibold text-espresso mb-1.5">
           Special Instructions{' '}
-          <span className="text-gray-400 font-normal">(optional)</span>
+          <span className="text-warmTaupe font-normal text-xs">(optional)</span>
         </label>
         <textarea
           id="checkout-note"
           rows={2}
-          placeholder="e.g. Extra spicy, gift wrapping, etc."
+          placeholder="e.g. Extra spicy, gift wrapping, specific delivery time"
           {...register('note')}
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-orange-400 focus:border-transparent resize-none"
+          className="w-full px-4 py-3 rounded-xl border border-warmTaupe/25 bg-pureWhite text-sm text-espresso placeholder-warmTaupe/50 outline-none transition-all duration-200 focus:ring-2 focus:ring-oliveGreen focus:border-transparent resize-none"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading || cartItems.length === 0}
-        className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all duration-200 text-base"
+        className="w-full flex items-center justify-center gap-2.5 bg-oliveGreen hover:bg-forestGreen active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl shadow-md shadow-oliveGreen/25 transition-all duration-200 text-base"
         aria-label="Place order via WhatsApp"
       >
         {loading ? (
@@ -148,15 +148,16 @@ export default function CheckoutForm() {
           </>
         ) : (
           <>
-            <MessageCircle size={18} />
+            <MessageCircle size={20} />
             Place Order via WhatsApp
           </>
         )}
       </button>
 
-      <p className="text-center text-xs text-gray-400">
-        Your order details will be sent to us on WhatsApp. We will confirm shortly.
+      <p className="text-center text-xs text-warmTaupe">
+        Your order details will open in WhatsApp ready to send. We will confirm and dispatch promptly!
       </p>
     </form>
   );
 }
+
