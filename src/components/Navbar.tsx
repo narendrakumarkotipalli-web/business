@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/pickles', label: 'Our Pickles' },
+    { href: '/pickles', label: 'Pickles' },
     { href: '/cart', label: 'Cart' },
   ];
 
@@ -22,10 +22,10 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-softCream border-b border-warmTaupe/15 shadow-sm backdrop-blur-md bg-opacity-95">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-oliveGreen/10 flex items-center justify-center border border-oliveGreen/20 group-hover:scale-105 transition-transform duration-200">
+          <Link href="/" className="flex items-center gap-3 group min-w-0">
+            <div className="w-10 h-10 rounded-full bg-oliveGreen/10 flex items-center justify-center border border-oliveGreen/20 group-hover:scale-105 transition-transform duration-200 shrink-0 overflow-hidden">
               <Image
-                src="/aruh_pickles/Aruh_icon.webp"
+                src="/aruh/Aruh_icon.webp"
                 alt="Aruh Pickles"
                 width={40}
                 height={40}

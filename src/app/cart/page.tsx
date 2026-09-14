@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ShoppingBag, ArrowRight } from 'lucide-react';
 import { useAppSelector } from '@/store/hooks';
 import CartItemCard from '@/components/CartItemCard';
@@ -14,8 +15,14 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
-        <div className="w-20 h-20 bg-mustardGold/15 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl border border-mustardGold/30 shadow-sm">
-          🏺
+        <div className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 border border-oliveGreen/20 shadow-md bg-oliveGreen/5">
+          <Image
+            src="/aruh/Aruh_icon.webp"
+            alt="Aruh Logo"
+            width={80}
+            height={80}
+            className="rounded-full object-cover"
+          />
         </div>
         <h1 className="text-3xl sm:text-4xl font-serif font-bold text-espresso mb-3">
           Your Cart is Empty

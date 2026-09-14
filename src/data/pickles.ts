@@ -27,7 +27,7 @@ export const pickles: Pickle[] = [
       '500g': 450,
       '1kg': 850,
     },
-    image: '/aruh_pickles/Chicken_Pickle.webp',
+    image: '/aruh/Chicken_Pickle.webp',
   },
   {
     id: 'gongura-chicken-pickle',
@@ -55,7 +55,7 @@ export const pickles: Pickle[] = [
       '500g': 480,
       '1kg': 900,
     },
-    image: '/aruh_pickles/Gongura_Chicken_Pickle.webp',
+    image: '/aruh/Gongura_Chicken_Pickle.webp',
   },
   {
     id: 'prawns-pickle',
@@ -83,7 +83,7 @@ export const pickles: Pickle[] = [
       '500g': 550,
       '1kg': 1000,
     },
-    image: '/aruh_pickles/Prawns-pickle.webp',
+    image: '/aruh/Prawns-pickle-1.webp',
   },
   {
     id: 'pandu-mirchi-pickle',
@@ -110,7 +110,7 @@ export const pickles: Pickle[] = [
       '500g': 300,
       '1kg': 580,
     },
-    image: '/aruh_pickles/Pandu_mirchi_pickle.webp',
+    image: '/aruh/Pandu_mirchi_pickle.webp',
   },
   {
     id: 'tomato-pickle',
@@ -138,7 +138,7 @@ export const pickles: Pickle[] = [
       '500g': 280,
       '1kg': 540,
     },
-    image: '/aruh_pickles/Tomato_Pickle.webp',
+    image: '/aruh/Tomato_Pickle.webp',
   },
 ];
 

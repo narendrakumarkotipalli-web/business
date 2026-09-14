@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Image from 'next/image';
-import { ShoppingCart, ChevronDown, Flame, Sparkles } from 'lucide-react';
+import { ShoppingCart, Flame, Sparkles, Info, Leaf } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Pickle, PackSize } from '@/types';
 import { useAppDispatch } from '@/store/hooks';
@@ -10,23 +10,25 @@ import { addToCart } from '@/store/cartSlice';
 import { formatPrice } from '@/utils/formatPrice';
 import SizeSelector from './SizeSelector';
 import QuantitySelector from './QuantitySelector';
+import PickleDetailModal from './PickleDetailModal';
 
 interface PickleCardProps {
   pickle: Pickle;
+  priority?: boolean;
 }
 
 const ALL_SIZES: PackSize[] = ['250g', '500g', '1kg'];
 
-export default function PickleCard({ pickle }: PickleCardProps) {
+export default function PickleCard({ pickle, priority = false }: PickleCardProps) {
   const dispatch = useAppDispatch();
   const [selectedSize, setSelectedSize] = useState<PackSize>('250g');
   const [quantity, setQuantity] = useState(1);
-  const [showIngredients, setShowIngredients] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const currentPrice = pickle.prices[selectedSize];
   const isVeg = pickle.category === 'veg';
 
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     dispatch(
       addToCart({
         id: `${pickle.id}-${selectedSize}`,
@@ -42,135 +44,238 @@ export default function PickleCard({ pickle }: PickleCardProps) {
       duration: 2500,
     });
     setQuantity(1);
-  };
+  }, [dispatch, pickle.id, pickle.name, selectedSize, quantity, currentPrice]);
 
   return (
-    <article className="group bg-pureWhite rounded-2xl shadow-[0_4px_20px_-4px_rgba(47,41,35,0.08)] hover:shadow-[0_12px_30px_-6px_rgba(47,41,35,0.15)] border border-warmTaupe/15 overflow-hidden flex flex-col transition-all duration-300 transform hover:-translate-y-1">
-      {/* Pickle Image Container */}
-      <div className="relative w-full h-56 overflow-hidden bg-softCream">
-        <Image
-          src={pickle.image}
-          alt={pickle.name}
-          fill
-          className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          priority={false}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-espresso/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none" />
+    <>
+      {/* ─── MOBILE: Horizontal card (image left, content right) ─── */}
+      <article className="pickle-card group bg-pureWhite rounded-2xl border border-warmTaupe/15 shadow-sm overflow-hidden
+                          flex flex-row sm:hidden
+                          transition-all duration-300">
 
-        {/* Badges on Image */}
-        <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
-          {/* Dietary Indicator */}
+        {/* Left: image */}
+        <div className="relative w-28 shrink-0 bg-softCream overflow-hidden">
+          <Image
+            src={pickle.image}
+            alt={pickle.name}
+            fill
+            priority={priority}
+            loading={priority ? undefined : 'lazy'}
+            className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            sizes="112px"
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-pureWhite/10 pointer-events-none" />
+
+          {/* Veg dot badge */}
           <div
-            className="w-5 h-5 bg-white/95 rounded flex items-center justify-center shadow-sm border border-warmTaupe/20"
-            title={isVeg ? '100% Vegetarian' : 'Non-Vegetarian Delicacy'}
+            className="absolute top-2 left-2 w-4 h-4 bg-white/95 rounded flex items-center justify-center border border-warmTaupe/20"
+            title={isVeg ? 'Vegetarian' : 'Non-Vegetarian'}
           >
-            <span
-              className={`w-2.5 h-2.5 rounded-full ${isVeg ? 'bg-emerald-600' : 'bg-chiliRed'
-                }`}
-            />
+            <span className={`w-2 h-2 rounded-full ${isVeg ? 'bg-emerald-600' : 'bg-chiliRed'}`} />
           </div>
-
-          {/* Tag / Category */}
-          {pickle.tag && (
-            <span className="bg-mustardGold text-espresso text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
-              <Sparkles size={11} className="text-espresso" />
-              {pickle.tag}
-            </span>
-          )}
         </div>
 
-        {pickle.spiceLevel && (
-          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full text-[11px] font-semibold text-chiliRed flex items-center gap-1 border border-chiliRed/20 shadow-sm">
-            <Flame size={12} className="fill-chiliRed text-chiliRed" />
-            {pickle.spiceLevel}
-          </div>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="p-5 sm:p-6 flex flex-col flex-1 gap-4">
-        <div>
-          <h3 className="font-serif text-xl font-bold text-espresso leading-snug group-hover:text-oliveGreen transition-colors duration-200">
-            {pickle.name}
-          </h3>
-          <p className="text-sm text-warmTaupe mt-1.5 line-clamp-2 leading-relaxed">
-            {pickle.description}
-          </p>
-        </div>
-
-        {/* Ingredients accordion */}
-        <div>
-          <button
-            type="button"
-            onClick={() => setShowIngredients((p) => !p)}
-            className="flex items-center gap-1 text-xs text-oliveGreen hover:text-forestGreen font-semibold tracking-wide"
-            aria-expanded={showIngredients}
-          >
-            View Ingredients
-            <ChevronDown
-              size={14}
-              className={`transition-transform duration-200 ${showIngredients ? 'rotate-180' : ''
-                }`}
-            />
-          </button>
-          {showIngredients && (
-            <div className="mt-2 text-xs text-warmTaupe bg-softCream rounded-xl p-3 border border-mustardGold/25 leading-relaxed animate-fadeIn">
-              <span className="font-semibold text-espresso block mb-1">Traditional recipe made with:</span>
-              {pickle.ingredients.join(' · ')}
+        {/* Right: content */}
+        <div className="flex flex-col flex-1 p-3 gap-2 min-w-0">
+          {/* Name row */}
+          <div className="flex items-start justify-between gap-1">
+            <div className="min-w-0">
+              <h3 
+                className="font-serif font-bold text-espresso text-sm leading-snug truncate block"
+                title={pickle.name}
+              >
+                {pickle.name}
+              </h3>
+              <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                {pickle.tag && (
+                  <span className="inline-flex items-center gap-0.5 text-[10px] bg-mustardGold/15 text-espresso font-bold px-1.5 py-0.5 rounded-full border border-mustardGold/30">
+                    <Sparkles size={8} />{pickle.tag}
+                  </span>
+                )}
+                {pickle.spiceLevel && (
+                  <span className="inline-flex items-center gap-0.5 text-[10px] text-chiliRed font-semibold">
+                    <Flame size={9} />{pickle.spiceLevel}
+                  </span>
+                )}
+              </div>
             </div>
-          )}
-        </div>
-
-        {/* Pack Size Selector */}
-        <div>
-          <div className="flex justify-between items-center mb-1.5">
-            <span className="text-[11px] text-warmTaupe font-semibold uppercase tracking-wider">
-              Select Pack Size
-            </span>
-            <span className="text-[11px] text-mustardGold font-bold">100% Preservative Free</span>
+            {/* Info button */}
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="shrink-0 p-1.5 rounded-full text-warmTaupe hover:text-oliveGreen hover:bg-oliveGreen/10 transition-colors duration-200"
+              aria-label={`View details for ${pickle.name}`}
+              title="View details"
+            >
+              <Info size={15} />
+            </button>
           </div>
-          <SizeSelector sizes={ALL_SIZES} selected={selectedSize} onChange={setSelectedSize} />
-        </div>
 
-        {/* Pricing & Quantity */}
-        <div className="pt-2 border-t border-warmTaupe/15 flex items-center justify-between">
-          <div>
-            <p className="text-[11px] text-warmTaupe uppercase tracking-wider font-semibold">Price</p>
-            <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-bold text-espresso font-serif">
+          {/* Size selector – compact */}
+          <div className="flex gap-1" role="group" aria-label="Select pack size">
+            {ALL_SIZES.map((size) => (
+              <button
+                key={size}
+                onClick={() => setSelectedSize(size)}
+                aria-pressed={selectedSize === size}
+                className={`flex-1 py-1 rounded-lg text-[10px] font-semibold border transition-all duration-150 ${
+                  selectedSize === size
+                    ? 'bg-oliveGreen border-oliveGreen text-white'
+                    : 'border-warmTaupe/25 text-espresso hover:border-oliveGreen hover:text-oliveGreen bg-pureWhite'
+                }`}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+
+          {/* Price + Add to cart */}
+          <div className="flex items-center justify-between gap-2 mt-auto">
+            <div>
+              <span className="text-base font-bold text-espresso font-serif">
                 {formatPrice(currentPrice)}
               </span>
-              <span className="text-xs text-warmTaupe">/ {selectedSize}</span>
+              <span className="text-[10px] text-warmTaupe ml-0.5">/{selectedSize}</span>
             </div>
-          </div>
-          <div>
-            <p className="text-[11px] text-warmTaupe uppercase tracking-wider font-semibold mb-1 text-right">
-              Quantity
-            </p>
-            <QuantitySelector quantity={quantity} onChange={setQuantity} />
+            <button
+              onClick={handleAddToCart}
+              className="flex items-center gap-1 bg-oliveGreen hover:bg-forestGreen active:scale-95 text-white font-semibold px-2.5 py-1.5 rounded-xl transition-all duration-200 text-[11px] shrink-0"
+              aria-label={`Add ${pickle.name} to cart`}
+            >
+              <ShoppingCart size={12} />
+              Add
+            </button>
           </div>
         </div>
+      </article>
 
-        {/* Subtotal notice if > 1 */}
-        {quantity > 1 && (
-          <div className="text-xs text-right text-warmTaupe">
-            Total for {quantity} packs:{' '}
-            <span className="font-bold text-espresso">{formatPrice(currentPrice * quantity)}</span>
+      {/* ─── DESKTOP: Vertical card (bigger, 3-per-row) ─── */}
+      <article className="pickle-card group bg-pureWhite rounded-2xl border border-warmTaupe/15
+                          shadow-[0_4px_24px_-4px_rgba(47,41,35,0.09)]
+                          hover:shadow-[0_16px_40px_-8px_rgba(47,41,35,0.18)]
+                          overflow-hidden flex-col
+                          hidden sm:flex
+                          transition-all duration-300">
+
+        {/* Image */}
+        <div className="relative w-full h-60 lg:h-64 overflow-hidden bg-softCream">
+          <Image
+            src={pickle.image}
+            alt={pickle.name}
+            fill
+            priority={priority}
+            loading={priority ? undefined : 'lazy'}
+            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            sizes="(max-width: 1024px) 50vw, 33vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-espresso/40 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none" />
+
+          {/* Top-left badges */}
+          <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
+            <div
+              className="w-5 h-5 bg-white/95 rounded flex items-center justify-center border border-warmTaupe/20 shadow-sm"
+              title={isVeg ? '100% Vegetarian' : 'Non-Vegetarian Delicacy'}
+            >
+              <span className={`w-2.5 h-2.5 rounded-full ${isVeg ? 'bg-emerald-600' : 'bg-chiliRed'}`} />
+            </div>
+            {pickle.tag && (
+              <span className="bg-mustardGold text-espresso text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+                <Sparkles size={10} />
+                {pickle.tag}
+              </span>
+            )}
           </div>
-        )}
 
-        {/* Add to Cart CTA */}
-        <button
-          onClick={handleAddToCart}
-          className="mt-auto w-full flex items-center justify-center gap-2 bg-oliveGreen hover:bg-forestGreen active:scale-98 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 shadow-sm shadow-oliveGreen/20 text-sm tracking-wide"
-          aria-label={`Add ${pickle.name} ${selectedSize} to cart`}
-        >
-          <ShoppingCart size={16} />
-          Add to Cart · {formatPrice(currentPrice * quantity)}
-        </button>
-      </div>
-    </article>
+          {/* Spice badge top-right */}
+          {pickle.spiceLevel && (
+            <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-chiliRed flex items-center gap-1 border border-chiliRed/20 shadow-sm">
+              <Flame size={11} className="fill-chiliRed text-chiliRed" />
+              {pickle.spiceLevel}
+            </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="p-5 lg:p-6 flex flex-col flex-1 gap-4">
+          {/* Name & dietary + info button */}
+          <div className="flex items-start justify-between gap-2 min-w-0">
+            <div className="min-w-0">
+              <h3 
+                className="font-serif text-xl font-bold text-espresso leading-snug truncate block group-hover:text-oliveGreen transition-colors duration-200"
+                title={pickle.name}
+              >
+                {pickle.name}
+              </h3>
+              <span className={`inline-flex items-center gap-1 text-xs font-semibold mt-1 ${isVeg ? 'text-emerald-700' : 'text-chiliRed'}`}>
+                {isVeg ? <Leaf size={11} /> : '🍗'} {isVeg ? 'Vegetarian' : 'Non-Veg'}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="shrink-0 flex items-center gap-1 text-[11px] text-oliveGreen hover:text-forestGreen font-semibold border border-oliveGreen/30 hover:border-oliveGreen px-2.5 py-1 rounded-full transition-all duration-200 hover:bg-oliveGreen/5"
+              aria-label={`View details for ${pickle.name}`}
+            >
+              <Info size={12} />
+              Details
+            </button>
+          </div>
+
+          {/* Pack Size Selector */}
+          <div>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-[11px] text-warmTaupe font-semibold uppercase tracking-wider">
+                Pack Size
+              </span>
+              <span className="text-[11px] text-mustardGold font-bold">No Preservatives</span>
+            </div>
+            <SizeSelector sizes={ALL_SIZES} selected={selectedSize} onChange={setSelectedSize} />
+          </div>
+
+          {/* Pricing & Quantity */}
+          <div className="pt-3 border-t border-warmTaupe/15 flex items-center justify-between">
+            <div>
+              <p className="text-[11px] text-warmTaupe uppercase tracking-wider font-semibold">Price</p>
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl font-bold text-espresso font-serif">
+                  {formatPrice(currentPrice)}
+                </span>
+                <span className="text-xs text-warmTaupe">/ {selectedSize}</span>
+              </div>
+            </div>
+            <div>
+              <p className="text-[11px] text-warmTaupe uppercase tracking-wider font-semibold mb-1 text-right">
+                Qty
+              </p>
+              <QuantitySelector quantity={quantity} onChange={setQuantity} />
+            </div>
+          </div>
+
+          {/* Subtotal notice */}
+          {quantity > 1 && (
+            <div className="text-xs text-right text-warmTaupe -mt-1">
+              Total:{' '}
+              <span className="font-bold text-espresso">{formatPrice(currentPrice * quantity)}</span>
+            </div>
+          )}
+
+          {/* Add to Cart CTA */}
+          <button
+            onClick={handleAddToCart}
+            className="mt-auto w-full flex items-center justify-center gap-2 bg-oliveGreen hover:bg-forestGreen active:scale-95 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 shadow-sm shadow-oliveGreen/20 text-sm tracking-wide"
+            aria-label={`Add ${pickle.name} ${selectedSize} to cart`}
+          >
+            <ShoppingCart size={16} />
+            Add to Cart · {formatPrice(currentPrice * quantity)}
+          </button>
+        </div>
+      </article>
+
+      {/* Detail Modal */}
+      {modalOpen && (
+        <PickleDetailModal pickle={pickle} onClose={() => setModalOpen(false)} />
+      )}
+    </>
   );
 }
-

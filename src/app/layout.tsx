@@ -21,24 +21,51 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'PickleMart — Authentic Homemade Non-Veg & Veg Pickles',
+  title: 'Aruh — Authentic Homemade Non-Veg & Veg Pickles',
   description:
-    'Order authentic homemade Andhra pickles online. Handcrafted Chicken, Gongura Chicken, Prawns, Pandu Mirchi, and Tomato pickles made with traditional recipes. Delivered across India.',
-  keywords: 'homemade pickles, Andhra pickles, non-veg pickles, veg pickles, chicken pickle, gongura pickle, prawns pickle, pandu mirchi pickle, tomato pickle, buy pickles online',
+    'Order authentic homemade Andhra pickles online. Handcrafted Chicken, Gongura Chicken, Prawns, Pandu Mirchi, and Tomato pickles made with traditional recipes. Delivering in Hyderabad, Kakinada, Samarlkot, and Pithapuram.',
+  keywords: 'homemade pickles, Andhra pickles, non-veg pickles, veg pickles, chicken pickle, gongura pickle, prawns pickle, pandu mirchi pickle, tomato pickle, Aruh pickles',
   icons: {
-    icon: '/aruh_pickles/Aruh_icon.webp',
+    icon: '/aruh/Aruh_icon.webp',
   },
   openGraph: {
-    title: 'PickleMart — Authentic Homemade Traditional Pickles',
-    description: 'Order fresh homemade traditional pickles online. Delivered pan-India.',
+    title: 'Aruh — Authentic Homemade Traditional Pickles',
+    description: 'Order fresh homemade traditional Andhra pickles online.',
     type: 'website',
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://aruhpickles.com', // Replace with actual domain when ready
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FoodEstablishment',
+  name: 'Aruh Pickles',
+  image: '/aruh/Aruh_icon.webp',
+  description: 'Authentic Homemade Non-Veg & Veg Andhra Pickles',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Hyderabad',
+    addressRegion: 'Andhra Pradesh',
+    addressCountry: 'IN',
+  },
+  servesCuisine: 'Andhra, Indian',
+  priceRange: '₹₹',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${playfair.variable} ${poppins.variable}`}>
       <body className="bg-warmIvory text-espresso font-sans min-h-screen flex flex-col antialiased selection:bg-mustardGold/30 selection:text-espresso">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ReduxProvider>
           <Navbar />
           <main className="flex-1">{children}</main>
