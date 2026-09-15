@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useAppSelector } from '@/store/hooks';
+import { buildWhatsAppInquiryUrl } from '@/utils/whatsapp';
+import WhatsAppIcon from './WhatsAppIcon';
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -55,6 +57,17 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <a
+              href={buildWhatsAppInquiryUrl('Hi Aruh! 👋 I would like to know more details about your authentic pickles and delivery.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#25D366]/10 text-[#128C7E] border border-[#25D366]/30 hover:bg-[#25D366] hover:text-white transition-all duration-200 shadow-2xs"
+              title="Chat or ask questions directly on WhatsApp without an order"
+            >
+              <WhatsAppIcon size={14} />
+              <span>DM Us</span>
+            </a>
+
             <Link
               href="/cart"
               aria-label={`Cart with ${cartCount} items`}
@@ -92,6 +105,20 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <a
+              href={buildWhatsAppInquiryUrl('Hi Aruh! 👋 I would like to know more details about your authentic pickles and delivery.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileOpen(false)}
+              className="py-3 px-3 rounded-lg text-emerald-800 bg-emerald-500/10 font-medium flex items-center justify-between transition-colors duration-200 mt-1 border border-emerald-500/20"
+              title="Chat or ask questions directly on WhatsApp without an order"
+            >
+              <span className="flex items-center gap-2">
+                <WhatsAppIcon size={18} className="text-[#25D366]" />
+                <span>DM on WhatsApp</span>
+              </span>
+              <span className="text-xs text-emerald-700 font-semibold">Chat Now →</span>
+            </a>
           </nav>
         </div>
       )}

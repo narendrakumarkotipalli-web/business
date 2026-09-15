@@ -4,6 +4,7 @@ import './globals.css';
 import ReduxProvider from '@/store/Provider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import FloatingWhatsAppButton from '@/components/FloatingWhatsAppButton';
 import { Toaster } from 'react-hot-toast';
 
 const playfair = Playfair_Display({
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <FloatingWhatsAppButton />
           <Toaster
             position="top-right"
             toastOptions={{

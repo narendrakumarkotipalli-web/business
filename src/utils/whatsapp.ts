@@ -17,7 +17,7 @@ export function buildWhatsAppUrl(
   ]);
 
   const lines = [
-    `🌶️ *PICKLEMART ORDER*`,
+    `🌶️ *ARUH PICKLES ORDER*`,
     `━━━━━━━━━━━━━━━━━━━━`,
     ``,
     `👤 *CUSTOMER DETAILS*`,
@@ -34,10 +34,17 @@ export function buildWhatsAppUrl(
     ``,
     `Please confirm my order and share the payment details.`,
     ``,
-    `_Thank you for choosing PickleMart!_`,
+    `_Thank you for choosing Aruh Pickles!_`,
   ];
 
   const message = lines.join('\n');
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '';
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '917702925319';
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+}
+
+export function buildWhatsAppInquiryUrl(
+  customMessage = 'Hi Aruh! 👋 I would like to know more details about your authentic homemade pickles, spices, and delivery.'
+): string {
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '917702925319';
+  return `https://wa.me/${number}?text=${encodeURIComponent(customMessage)}`;
 }

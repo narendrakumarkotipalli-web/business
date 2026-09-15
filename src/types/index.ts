@@ -27,6 +27,7 @@ export interface CartItem {
   size: PackSize;
   quantity: number;
   price: number;
+  image?: string;
 }
 
 export interface CustomerForm {

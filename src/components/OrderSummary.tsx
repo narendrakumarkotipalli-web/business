@@ -1,8 +1,10 @@
 'use client';
 
+import Image from 'next/image';
 import { useAppSelector } from '@/store/hooks';
 import { formatPrice } from '@/utils/formatPrice';
 import { CartItem } from '@/types';
+import { pickles } from '@/data/pickles';
 
 interface OrderSummaryProps {
   compact?: boolean;
@@ -19,23 +21,35 @@ export default function OrderSummary({ compact = false }: OrderSummaryProps) {
       <h2 className="font-serif font-bold text-espresso mb-4 text-lg border-b border-warmTaupe/15 pb-2">
         Order Summary ({items.length} {items.length === 1 ? 'item' : 'items'})
       </h2>
-      <ul className="space-y-3 mb-5">
-        {items.map((item) => (
-          <li key={item.id} className="flex justify-between items-start text-sm">
-            <div>
-              <span className="font-medium text-espresso">{item.name}</span>
-              <span className="text-warmTaupe ml-1 text-xs">({item.size})</span>
-              {!compact && (
-                <p className="text-xs text-warmTaupe/80 mt-0.5">
-                  {formatPrice(item.price)} × {item.quantity}
-                </p>
-              )}
-            </div>
-            <span className="font-serif font-bold text-espresso ml-4 shrink-0">
-              {formatPrice(item.price * item.quantity)}
-            </span>
-          </li>
-        ))}
+      <ul className="space-y-3.5 mb-5">
+        {items.map((item) => {
+          const itemImg = item.image || pickles.find((p) => p.id === item.pickleId)?.image || '/aruh/Aruh_icon.webp';
+          return (
+            <li key={item.id} className="flex justify-between items-center text-sm gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="relative w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-pureWhite border border-warmTaupe/15 shadow-xs">
+                  <Image
+                    src={itemImg}
+                    alt={item.name}
+                    fill
+                    className="object-cover"
+                    sizes="40px"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <span className="font-medium text-espresso block truncate">{item.name}</span>
+                  <span className="text-warmTaupe text-xs">
+                    {item.size}
+                    {!compact && ` · ${formatPrice(item.price)} × ${item.quantity}`}
+                  </span>
+                </div>
+              </div>
+              <span className="font-serif font-bold text-espresso ml-2 shrink-0">
+                {formatPrice(item.price * item.quantity)}
+              </span>
+            </li>
+          );
+        })}
       </ul>
       <div className="border-t border-warmTaupe/20 pt-4 flex justify-between items-center">
         <span className="font-serif font-bold text-espresso text-base">Grand Total</span>

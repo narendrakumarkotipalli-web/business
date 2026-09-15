@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Star, ShieldCheck, Truck, Sparkles, HeartHandshake, Leaf, ChefHat, MapPin } from 'lucide-react';
 import dynamic from 'next/dynamic';
@@ -47,8 +48,15 @@ export default function HomePage() {
         aria-label="Hero section"
       >
         {/* Subtle background ambient texture */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none select-none text-[260px] leading-none flex items-center justify-center font-serif text-espresso">
-          🏺
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none select-none flex items-center justify-center overflow-hidden">
+          <Image
+            src="/aruh/Aruh_icon.webp"
+            alt="Aruh watermark"
+            width={320}
+            height={320}
+            priority
+            className="w-64 sm:w-80 h-auto object-contain rounded-full filter grayscale"
+          />
         </div>
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
