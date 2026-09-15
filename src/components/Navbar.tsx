@@ -28,7 +28,7 @@ export default function Navbar() {
             <div className="w-10 h-10 rounded-full bg-oliveGreen/10 flex items-center justify-center border border-oliveGreen/20 group-hover:scale-105 transition-transform duration-200 shrink-0 overflow-hidden">
               <Image
                 src="/aruh/Aruh_icon.webp"
-                alt="Aruh Pickles"
+                alt="Aruh Foods"
                 width={40}
                 height={40}
                 className="h-full w-full rounded-full object-cover"
@@ -36,7 +36,7 @@ export default function Navbar() {
             </div>
             <div className="leading-tight">
               <p className="text-xl sm:text-2xl font-serif font-bold text-espresso tracking-tight">
-                Aruh Pickles
+                Aruh Foods
               </p>
               <p className="text-[11px] uppercase tracking-wider text-mustardGold font-semibold">
                 Authentic Homemade Pickles

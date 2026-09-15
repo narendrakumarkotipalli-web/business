@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { AlertTriangle } from 'lucide-react';
 import { useAppSelector } from '@/store/hooks';
 import { formatPrice } from '@/utils/formatPrice';
 import { CartItem } from '@/types';
@@ -51,9 +52,18 @@ export default function OrderSummary({ compact = false }: OrderSummaryProps) {
           );
         })}
       </ul>
+
       <div className="border-t border-warmTaupe/20 pt-4 flex justify-between items-center">
         <span className="font-serif font-bold text-espresso text-base">Grand Total</span>
         <span className="text-2xl font-bold text-oliveGreen font-serif">{formatPrice(total)}</span>
+      </div>
+
+      {/* Delivery charge warning chip */}
+      <div className="mt-3.5 flex items-start gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900 text-xs font-medium">
+        <AlertTriangle size={15} className="text-amber-600 shrink-0 mt-0.5" />
+        <span>
+          <strong className="font-semibold text-amber-950">Note:</strong> Delivery charges may apply based on delivery location (Price shown is for pickles only).
+        </span>
       </div>
     </div>
   );

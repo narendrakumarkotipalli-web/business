@@ -23,7 +23,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <Image
                 src="/aruh/Aruh_icon.webp"
-                alt="Aruh Pickles"
+                alt="Aruh Foods"
                 width={40}
                 height={40}
                 className="rounded-full bg-oliveGreen/10 border border-oliveGreen/20"

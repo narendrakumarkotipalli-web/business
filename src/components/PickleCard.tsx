@@ -100,7 +100,7 @@ export default function PickleCard({ pickle, priority = false }: PickleCardProps
 
               {/* Full-width heading with tooltip & truncation */}
               <h3 
-                className="font-serif font-bold text-espresso text-base leading-snug line-clamp-2 break-words"
+                className="font-serif font-bold text-espresso text-base leading-snug truncate"
                 title={pickle.name}
               >
                 {pickle.name}
@@ -206,12 +206,12 @@ export default function PickleCard({ pickle, priority = false }: PickleCardProps
       <article className="pickle-card group bg-pureWhite rounded-2xl border border-warmTaupe/15
                           shadow-[0_4px_24px_-4px_rgba(47,41,35,0.09)]
                           hover:shadow-[0_16px_40px_-8px_rgba(47,41,35,0.18)]
-                          overflow-hidden flex-col
+                          overflow-hidden flex-col h-full
                           hidden sm:flex
                           transition-all duration-300">
 
         {/* Image */}
-        <div className="relative w-full h-60 lg:h-64 overflow-hidden bg-softCream">
+        <div className="relative w-full h-60 lg:h-64 overflow-hidden bg-softCream shrink-0">
           <Image
             src={pickle.image}
             alt={pickle.name}
@@ -249,78 +249,86 @@ export default function PickleCard({ pickle, priority = false }: PickleCardProps
         </div>
 
         {/* Content */}
-        <div className="p-5 lg:p-6 flex flex-col flex-1 gap-4">
-          {/* Name & dietary + info button */}
-          <div className="flex items-start justify-between gap-2 min-w-0">
-            <div className="min-w-0">
-              <h3 
-                className="font-serif text-xl font-bold text-espresso leading-snug line-clamp-2 break-words group-hover:text-oliveGreen transition-colors duration-200"
-                title={pickle.name}
-              >
-                {pickle.name}
-              </h3>
-              <span className={`inline-flex items-center gap-1 text-xs font-semibold mt-1 ${isVeg ? 'text-emerald-700' : 'text-chiliRed'}`}>
-                {isVeg ? <Leaf size={11} /> : '🍗'} {isVeg ? 'Vegetarian' : 'Non-Veg'}
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => setModalOpen(true)}
-              className="shrink-0 flex items-center gap-1 text-[11px] text-oliveGreen hover:text-forestGreen font-semibold border border-oliveGreen/30 hover:border-oliveGreen px-2.5 py-1 rounded-full transition-all duration-200 hover:bg-oliveGreen/5"
-              aria-label={`View details for ${pickle.name}`}
-            >
-              <Info size={12} />
-              Details
-            </button>
-          </div>
-
-          {/* Pack Size Selector */}
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-[11px] text-warmTaupe font-semibold uppercase tracking-wider">
-                Pack Size
-              </span>
-              <span className="text-[11px] text-mustardGold font-bold">No Preservatives</span>
-            </div>
-            <SizeSelector sizes={ALL_SIZES} selected={selectedSize} onChange={setSelectedSize} />
-          </div>
-
-          {/* Pricing & Quantity */}
-          <div className="pt-3 border-t border-warmTaupe/15 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] text-warmTaupe uppercase tracking-wider font-semibold">Price</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-espresso font-serif">
-                  {formatPrice(currentPrice)}
+        <div className="p-5 lg:p-6 flex flex-col flex-1 justify-between gap-4">
+          {/* Top info section */}
+          <div className="flex flex-col gap-4">
+            {/* Name & dietary + info button */}
+            <div className="flex items-start justify-between gap-2 min-w-0">
+              <div className="min-w-0 flex-1">
+                <h3 
+                  className="font-serif text-xl font-bold text-espresso leading-snug truncate group-hover:text-oliveGreen transition-colors duration-200"
+                  title={pickle.name}
+                >
+                  {pickle.name}
+                </h3>
+                <span className={`inline-flex items-center gap-1 text-xs font-semibold mt-1 ${isVeg ? 'text-emerald-700' : 'text-chiliRed'}`}>
+                  {isVeg ? <Leaf size={11} /> : '🍗'} {isVeg ? 'Vegetarian' : 'Non-Veg'}
                 </span>
-                <span className="text-xs text-warmTaupe">/ {selectedSize}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setModalOpen(true)}
+                className="shrink-0 flex items-center gap-1 text-[11px] text-oliveGreen hover:text-forestGreen font-semibold border border-oliveGreen/30 hover:border-oliveGreen px-2.5 py-1 rounded-full transition-all duration-200 hover:bg-oliveGreen/5"
+                aria-label={`View details for ${pickle.name}`}
+              >
+                <Info size={12} />
+                Details
+              </button>
+            </div>
+
+            {/* Pack Size Selector */}
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-[11px] text-warmTaupe font-semibold uppercase tracking-wider">
+                  Pack Size
+                </span>
+                <span className="text-[11px] text-mustardGold font-bold">No Preservatives</span>
+              </div>
+              <SizeSelector sizes={ALL_SIZES} selected={selectedSize} onChange={setSelectedSize} />
+            </div>
+          </div>
+
+          {/* Bottom section: Pricing & CTA */}
+          <div className="flex flex-col gap-3">
+            {/* Pricing & Quantity */}
+            <div className="pt-3 border-t border-warmTaupe/15 flex items-center justify-between">
+              <div>
+                <p className="text-[11px] text-warmTaupe uppercase tracking-wider font-semibold">Price</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-2xl font-bold text-espresso font-serif">
+                    {formatPrice(currentPrice)}
+                  </span>
+                  <span className="text-xs text-warmTaupe">/ {selectedSize}</span>
+                </div>
+              </div>
+              <div>
+                <p className="text-[11px] text-warmTaupe uppercase tracking-wider font-semibold mb-1 text-right">
+                  Qty
+                </p>
+                <QuantitySelector quantity={quantity} onChange={setQuantity} />
               </div>
             </div>
-            <div>
-              <p className="text-[11px] text-warmTaupe uppercase tracking-wider font-semibold mb-1 text-right">
-                Qty
-              </p>
-              <QuantitySelector quantity={quantity} onChange={setQuantity} />
+
+            {/* Subtotal notice reserved height slot */}
+            <div className="text-xs text-right text-warmTaupe min-h-[16px] -mt-1">
+              {quantity > 1 && (
+                <>
+                  Total:{' '}
+                  <span className="font-bold text-espresso">{formatPrice(currentPrice * quantity)}</span>
+                </>
+              )}
             </div>
+
+            {/* Add to Cart CTA */}
+            <button
+              onClick={handleAddToCart}
+              className="w-full flex items-center justify-center gap-2 bg-oliveGreen hover:bg-forestGreen active:scale-95 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 shadow-sm shadow-oliveGreen/20 text-sm tracking-wide"
+              aria-label={`Add ${pickle.name} ${selectedSize} to cart`}
+            >
+              <ShoppingCart size={16} />
+              Add to Cart · {formatPrice(currentPrice * quantity)}
+            </button>
           </div>
-
-          {/* Subtotal notice */}
-          {quantity > 1 && (
-            <div className="text-xs text-right text-warmTaupe -mt-1">
-              Total:{' '}
-              <span className="font-bold text-espresso">{formatPrice(currentPrice * quantity)}</span>
-            </div>
-          )}
-
-          {/* Add to Cart CTA */}
-          <button
-            onClick={handleAddToCart}
-            className="mt-auto w-full flex items-center justify-center gap-2 bg-oliveGreen hover:bg-forestGreen active:scale-95 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 shadow-sm shadow-oliveGreen/20 text-sm tracking-wide"
-            aria-label={`Add ${pickle.name} ${selectedSize} to cart`}
-          >
-            <ShoppingCart size={16} />
-            Add to Cart · {formatPrice(currentPrice * quantity)}
-          </button>
         </div>
       </article>
 

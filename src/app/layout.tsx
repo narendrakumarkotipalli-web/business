@@ -22,15 +22,15 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Aruh — Authentic Homemade Non-Veg & Veg Pickles',
+  title: 'Aruh Foods — Authentic Homemade Non-Veg & Veg Pickles',
   description:
     'Order authentic homemade Andhra pickles online. Handcrafted Chicken, Gongura Chicken, Prawns, Pandu Mirchi, and Tomato pickles made with traditional recipes. Delivering in Hyderabad, Kakinada, Samarlkot, and Pithapuram.',
-  keywords: 'homemade pickles, Andhra pickles, non-veg pickles, veg pickles, chicken pickle, gongura pickle, prawns pickle, pandu mirchi pickle, tomato pickle, Aruh pickles',
+  keywords: 'homemade pickles, Andhra pickles, non-veg pickles, veg pickles, chicken pickle, gongura pickle, prawns pickle, pandu mirchi pickle, tomato pickle, Aruh foods, Aruh pickles',
   icons: {
     icon: '/aruh/Aruh_icon.webp',
   },
   openGraph: {
-    title: 'Aruh — Authentic Homemade Traditional Pickles',
+    title: 'Aruh Foods — Authentic Homemade Traditional Pickles',
     description: 'Order fresh homemade traditional Andhra pickles online.',
     type: 'website',
   },
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FoodEstablishment',
-  name: 'Aruh Pickles',
+  name: 'Aruh Foods',
   image: '/aruh/Aruh_icon.webp',
   description: 'Authentic Homemade Non-Veg & Veg Andhra Pickles',
   address: {

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PickleSelectionSection from '@/components/PickleSelectionSection';
 
 export const metadata: Metadata = {
-  title: 'Pickles — Aruh Homemade Andhra Pickles',
+  title: 'Pickles — Aruh Foods',
   description:
     'Browse our handcrafted range of homemade Andhra pickles — Chicken, Gongura Chicken, Coastal Prawns, Pandu Mirchi, and Tomato pickles. Select pack size and order directly via WhatsApp.',
 };

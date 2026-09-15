@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { MessageCircle, Loader2 } from 'lucide-react';
+import { MessageCircle, Loader2, AlertTriangle } from 'lucide-react';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { clearCart } from '@/store/cartSlice';
@@ -133,6 +133,14 @@ export default function CheckoutForm() {
           {...register('note')}
           className="w-full px-4 py-3 rounded-xl border border-warmTaupe/25 bg-pureWhite text-sm text-espresso placeholder-warmTaupe/50 outline-none transition-all duration-200 focus:ring-2 focus:ring-oliveGreen focus:border-transparent resize-none"
         />
+      </div>
+
+      {/* Delivery charge warning chip */}
+      <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900 text-xs font-medium">
+        <AlertTriangle size={16} className="text-amber-600 shrink-0 mt-0.5" />
+        <div>
+          <span className="font-bold text-amber-950">Delivery Note:</span> Delivery charges may apply based on delivery location (Price shown is for pickles only).
+        </div>
       </div>
 
       <button

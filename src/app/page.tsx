@@ -10,7 +10,7 @@ const PickleSelectionSection = dynamic(() => import('@/components/PickleSelectio
 });
 
 export const metadata: Metadata = {
-  title: 'Aruh — Authentic Homemade Traditional Andhra Pickles | Order Online',
+  title: 'Aruh Foods — Authentic Homemade Traditional Andhra Pickles | Order Online',
   description:
     'Shop authentic homemade Andhra pickles — Chicken, Gongura Chicken, Prawns, Pandu Mirchi, and Tomato. Freshly made with cold-pressed sesame oil. Order online via WhatsApp. Delivering in Hyderabad, Kakinada, Samarlkot, Pithapuram.',
 };

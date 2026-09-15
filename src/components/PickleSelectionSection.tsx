@@ -153,11 +153,11 @@ export default function PickleSelectionSection() {
 
       {/* Pickles Grid — 1 col mobile (horizontal cards), 2 on sm, 3 on lg */}
       {filteredPickles.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 items-stretch">
           {filteredPickles.map((pickle, index) => (
             <div
               key={pickle.id}
-              className="pickle-card-wrapper"
+              className="pickle-card-wrapper h-full flex flex-col"
               style={{ animationDelay: `${index * 60}ms` }}
             >
               <PickleCard pickle={pickle} priority={index < 4} />

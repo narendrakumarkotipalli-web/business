@@ -26,7 +26,7 @@ export default function ErrorPage({
         <div className="w-24 h-24 mx-auto bg-oliveGreen/10 rounded-full border border-oliveGreen/20 flex items-center justify-center mb-6 shadow-sm overflow-hidden shrink-0">
           <Image
             src="/aruh/Aruh_icon.webp"
-            alt="Aruh Pickles"
+            alt="Aruh Foods"
             width={96}
             height={96}
             className="w-full h-full object-cover rounded-full"

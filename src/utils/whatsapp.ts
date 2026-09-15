@@ -17,7 +17,7 @@ export function buildWhatsAppUrl(
   ]);
 
   const lines = [
-    `🌶️ *ARUH PICKLES ORDER*`,
+    `🌶️ *ARUH FOODS ORDER*`,
     `━━━━━━━━━━━━━━━━━━━━`,
     ``,
     `👤 *CUSTOMER DETAILS*`,
@@ -31,10 +31,11 @@ export function buildWhatsAppUrl(
     ...itemLines,
     `━━━━━━━━━━━━━━━━━━━━`,
     `💰 *GRAND TOTAL: ${formatPrice(total)}*`,
+    `_(Note: Delivery charges extra based on delivery location)_`,
     ``,
     `Please confirm my order and share the payment details.`,
     ``,
-    `_Thank you for choosing Aruh Pickles!_`,
+    `_Thank you for choosing Aruh Foods!_`,
   ];
 
   const message = lines.join('\n');

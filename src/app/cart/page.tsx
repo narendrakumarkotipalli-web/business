@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { ShoppingBag, ArrowRight, AlertTriangle } from 'lucide-react';
 import { useAppSelector } from '@/store/hooks';
 import CartItemCard from '@/components/CartItemCard';
 import { formatPrice } from '@/utils/formatPrice';
@@ -82,13 +82,23 @@ export default function CartPage() {
                 </div>
               ))}
             </div>
+            
             <div className="border-t border-warmTaupe/15 mt-5 pt-4 flex justify-between items-baseline font-bold text-base">
               <span className="font-serif text-espresso text-lg">Total Amount</span>
               <span className="text-2xl font-serif text-oliveGreen">{formatPrice(total)}</span>
             </div>
+
+            {/* Delivery charge warning chip */}
+            <div className="mt-3.5 flex items-start gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900 text-xs font-medium">
+              <AlertTriangle size={15} className="text-amber-600 shrink-0 mt-0.5" />
+              <span>
+                <strong className="font-semibold text-amber-950">Note:</strong> Delivery charges may apply based on delivery location (Price shown is for pickles only).
+              </span>
+            </div>
+
             <Link
               href="/checkout"
-              className="mt-6 w-full flex items-center justify-center gap-2 bg-oliveGreen hover:bg-forestGreen active:scale-98 text-white font-bold py-4 rounded-xl shadow-md shadow-oliveGreen/25 transition-all duration-200 text-sm"
+              className="mt-5 w-full flex items-center justify-center gap-2 bg-oliveGreen hover:bg-forestGreen active:scale-98 text-white font-bold py-4 rounded-xl shadow-md shadow-oliveGreen/25 transition-all duration-200 text-sm"
             >
               Proceed to Checkout <ArrowRight size={16} />
             </Link>

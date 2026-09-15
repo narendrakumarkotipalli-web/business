@@ -3,7 +3,7 @@ import CheckoutForm from '@/components/CheckoutForm';
 import OrderSummary from '@/components/OrderSummary';
 
 export const metadata: Metadata = {
-  title: 'Complete Your Order — PickleMart',
+  title: 'Complete Your Order — Aruh Foods',
   description: 'Complete your homemade Andhra pickle order quickly and easily via WhatsApp.',
 };
 
