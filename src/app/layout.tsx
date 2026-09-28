@@ -21,42 +21,127 @@ const poppins = Poppins({
   display: 'swap',
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aruh.store';
+
 export const metadata: Metadata = {
-  title: 'Aruh Foods — Authentic Homemade Non-Veg & Veg Pickles',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Aruh Foods — Authentic Homemade Andhra Pickles | Buy Online',
+    template: '%s | Aruh Foods',
+  },
   description:
-    'Order authentic homemade Andhra pickles online. Handcrafted Chicken, Gongura Chicken, Prawns, Pandu Mirchi, and Tomato pickles made with traditional recipes. Delivering in Hyderabad, Kakinada, Samarlkot, and Pithapuram.',
-  keywords: 'homemade pickles, Andhra pickles, non-veg pickles, veg pickles, chicken pickle, gongura pickle, prawns pickle, pandu mirchi pickle, tomato pickle, Aruh foods, Aruh pickles',
+    'Order authentic homemade Andhra & Rayalaseema pickles online. Handcrafted Chicken Pickle, Gongura Chicken Pickle, Coastal Prawns Pickle, Pandu Mirchi Pachadi, and Tomato Pickle made with pure cold-pressed sesame oil. Zero chemical preservatives. Fast delivery in Hyderabad, Kakinada, Samarlkot, Pithapuram & across India.',
+  keywords: [
+    'Andhra pickles online',
+    'buy chicken pickle online',
+    'homemade non-veg pickles',
+    'gongura chicken pickle hyderabad',
+    'authentic Andhra pickles',
+    'spicy prawns pickle online',
+    'pandu mirchi pickle pachadi',
+    'traditional tomato pickle',
+    'preservative free pickles',
+    'Aruh Foods',
+    'Aruh pickles',
+  ],
+  authors: [{ name: 'Aruh Foods', url: siteUrl }],
+  creator: 'Aruh Foods',
+  publisher: 'Aruh Foods',
+  category: 'Food & Beverage',
   icons: {
     icon: '/aruh/Aruh_icon.webp',
+    apple: '/aruh/Aruh_icon.webp',
   },
+  manifest: '/manifest.webmanifest',
   openGraph: {
-    title: 'Aruh Foods — Authentic Homemade Traditional Pickles',
-    description: 'Order fresh homemade traditional Andhra pickles online.',
+    title: 'Aruh Foods — Authentic Homemade Andhra & Rayalaseema Pickles',
+    description:
+      'Handcrafted Chicken, Gongura Chicken, Prawns, Pandu Mirchi & Tomato pickles online. Made with cold-pressed sesame oil & zero preservatives.',
+    url: siteUrl,
+    siteName: 'Aruh Foods',
+    images: [
+      {
+        url: `${siteUrl}/aruh/Aruh_icon.webp`,
+        width: 800,
+        height: 800,
+        alt: 'Aruh Foods Authentic Andhra Pickles',
+      },
+    ],
+    locale: 'en_IN',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Aruh Foods — Authentic Homemade Andhra Pickles',
+    description: 'Fresh artisanal pickles made in small batches with cold-pressed sesame oil.',
+    images: [`${siteUrl}/aruh/Aruh_icon.webp`],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   alternates: {
-    canonical: 'https://aruhpickles.com', // Replace with actual domain when ready
+    canonical: siteUrl,
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || 'YOUR_GOOGLE_VERIFICATION_CODE',
   },
 };
 
-const jsonLd = {
+const storeSchema = {
   '@context': 'https://schema.org',
   '@type': 'FoodEstablishment',
   name: 'Aruh Foods',
-  image: '/aruh/Aruh_icon.webp',
-  description: 'Authentic Homemade Non-Veg & Veg Andhra Pickles',
+  url: siteUrl,
+  image: `${siteUrl}/aruh/Aruh_icon.webp`,
+  description: 'Authentic Homemade Non-Veg & Veg Andhra Pickles crafted in small batches using cold-pressed sesame oil.',
+  priceRange: '₹₹',
+  servesCuisine: 'Andhra, Indian, Rayalaseema',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Hyderabad',
-    addressRegion: 'Andhra Pradesh',
+    addressRegion: 'Telangana & Andhra Pradesh',
     addressCountry: 'IN',
   },
-  servesCuisine: 'Andhra, Indian',
-  priceRange: '₹₹',
+  areaServed: ['Hyderabad', 'Kakinada', 'Samarlkot', 'Pithapuram', 'India'],
+  currenciesAccepted: 'INR',
+  paymentAccepted: 'Cash, UPI, Online Payment',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Artisanal Pickles Catalog',
+    itemListElement: [
+      {
+        '@type': 'OfferCatalog',
+        name: 'Non-Veg Pickles',
+      },
+      {
+        '@type': 'OfferCatalog',
+        name: 'Veg Pickles',
+      },
+    ],
+  },
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Aruh Foods',
+  url: siteUrl,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${siteUrl}/pickles?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -65,7 +150,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-warmIvory text-espresso font-sans min-h-screen flex flex-col antialiased selection:bg-mustardGold/30 selection:text-espresso">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(storeSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         <ReduxProvider>
           <Navbar />

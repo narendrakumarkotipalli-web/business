@@ -49,3 +49,13 @@ export function buildWhatsAppInquiryUrl(
   const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '917702925319';
   return `https://wa.me/${number}?text=${encodeURIComponent(customMessage)}`;
 }
+
+export function buildWhatsAppSingleItemUrl(
+  itemName: string,
+  size: string,
+  price: number
+): string {
+  const message = `Hi Aruh! 👋 I would like to order *${itemName}* (${size}) for ₹${price}.\n\nPlease share availability and payment details.`;
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '917702925319';
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+}

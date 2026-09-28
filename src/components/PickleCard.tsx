@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ShoppingCart, Flame, Sparkles, Info, Leaf } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Pickle, PackSize } from '@/types';
@@ -107,18 +108,19 @@ export default function PickleCard({ pickle, priority = false }: PickleCardProps
               </h3>
             </div>
 
-            {/* Info / Details Button */}
-            <button
-              type="button"
-              onClick={() => setModalOpen(true)}
-              className="shrink-0 flex items-center gap-1 text-[11px] text-oliveGreen hover:text-forestGreen font-semibold border border-oliveGreen/30 hover:border-oliveGreen px-2.5 py-1 rounded-full transition-all duration-200 hover:bg-oliveGreen/5 mt-0.5"
-              aria-label={`View details for ${pickle.name}`}
-              title={`View ingredients & details for ${pickle.name}`}
-            >
-              <Info size={12} />
-              <span>Details</span>
-            </button>
-          </div>
+              {/* Info / Details Button & Page Link */}
+              <div className="flex items-center gap-1 mt-0.5">
+                <Link
+                  href={`/pickles/${pickle.slug}`}
+                  className="shrink-0 flex items-center gap-1 text-[11px] text-oliveGreen hover:text-forestGreen font-semibold border border-oliveGreen/30 hover:border-oliveGreen px-2.5 py-1 rounded-full transition-all duration-200 hover:bg-oliveGreen/5"
+                  aria-label={`View full page for ${pickle.name}`}
+                  title={`View full page for ${pickle.name}`}
+                >
+                  <Info size={12} />
+                  <span>View</span>
+                </Link>
+              </div>
+            </div>
         </div>
 
         {/* 2. Middle Body: Image on left, Pack size & pricing on right */}
@@ -259,21 +261,22 @@ export default function PickleCard({ pickle, priority = false }: PickleCardProps
                   className="font-serif text-xl font-bold text-espresso leading-snug truncate group-hover:text-oliveGreen transition-colors duration-200"
                   title={pickle.name}
                 >
-                  {pickle.name}
+                  <Link href={`/pickles/${pickle.slug}`} className="hover:underline">
+                    {pickle.name}
+                  </Link>
                 </h3>
                 <span className={`inline-flex items-center gap-1 text-xs font-semibold mt-1 ${isVeg ? 'text-emerald-700' : 'text-chiliRed'}`}>
                   {isVeg ? <Leaf size={11} /> : '🍗'} {isVeg ? 'Vegetarian' : 'Non-Veg'}
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={() => setModalOpen(true)}
+              <Link
+                href={`/pickles/${pickle.slug}`}
                 className="shrink-0 flex items-center gap-1 text-[11px] text-oliveGreen hover:text-forestGreen font-semibold border border-oliveGreen/30 hover:border-oliveGreen px-2.5 py-1 rounded-full transition-all duration-200 hover:bg-oliveGreen/5"
-                aria-label={`View details for ${pickle.name}`}
+                aria-label={`View full details page for ${pickle.name}`}
               >
                 <Info size={12} />
-                Details
-              </button>
+                View Page
+              </Link>
             </div>
 
             {/* Pack Size Selector */}

@@ -9,10 +9,18 @@ const PickleSelectionSection = dynamic(() => import('@/components/PickleSelectio
   ssr: true, // we still want SSR for SEO, but it splits the JS bundle
 });
 
+import FaqSection from '@/components/FaqSection';
+import { pickles } from '@/data/pickles';
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aruh.store';
+
 export const metadata: Metadata = {
-  title: 'Aruh Foods — Authentic Homemade Traditional Andhra Pickles | Order Online',
+  title: 'Aruh Foods — Authentic Homemade Andhra & Rayalaseema Pickles | Order Online',
   description:
-    'Shop authentic homemade Andhra pickles — Chicken, Gongura Chicken, Prawns, Pandu Mirchi, and Tomato. Freshly made with cold-pressed sesame oil. Order online via WhatsApp. Delivering in Hyderabad, Kakinada, Samarlkot, Pithapuram.',
+    'Order authentic homemade Andhra pickles — Chicken Pickle, Gongura Chicken Pickle, Coastal Prawns Pickle, Pandu Mirchi Pachadi, and Tomato Pickle. Made with pure cold-pressed sesame oil and zero chemical preservatives. Fast delivery in Hyderabad, Kakinada, Samarlkot, Pithapuram.',
+  alternates: {
+    canonical: siteUrl,
+  },
 };
 
 const trustBadges = [
@@ -207,6 +215,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section with JSON-LD Schema */}
+      <FaqSection />
 
       {/* WhatsApp Order CTA */}
       <section className="bg-deepBrown text-pureWhite relative overflow-hidden py-16">
